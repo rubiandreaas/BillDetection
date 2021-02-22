@@ -53,11 +53,11 @@
 #         data.append(jpeg.tobytes())
 #         return data
 
-import cv2
+#import cv2
 import pickle
 from imutils.video import WebcamVideoStream
 import pygame
-import cv2, numpy as np
+import numpy as np
 import glob
 import datetime as dt
 
