@@ -53,7 +53,7 @@
 #         data.append(jpeg.tobytes())
 #         return data
 
-#import cv2
+import cv2
 import pickle
 from imutils.video import WebcamVideoStream
 import pygame
