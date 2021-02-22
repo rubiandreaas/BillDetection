@@ -5,7 +5,7 @@ import requests
 import base64,cv2
 
 
-application = app =Flask(__name__)
+app =Flask(__name__)
 output=[]#("message stark","hi")]
 @app.route('/')
 def home_page():
