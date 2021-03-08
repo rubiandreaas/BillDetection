@@ -1,58 +1,3 @@
-# import cv2
-# import pickle
-# from imutils.video import WebcamVideoStream
-# import face_recognition
-# # img=WebcamVideoStream(src=0).start().read()
-# # print(img)
-#
-# class VideoCamera(object):
-#     def __init__(self):
-#
-#         self.stream = WebcamVideoStream(src=0).start()
-#
-#     def __del__(self):
-#         self.stream.stop()
-#
-#     # def predict(self, frame, knn_clf, distance_threshold=0.4):
-#     #     # Find face locations
-#     #     X_face_locations = face_recognition.face_locations(frame)
-#     #     # print("X_face_locations",X_face_locations[0])
-#     #     # X_face_locations[0][0]: X_face_locations[0][1], X_face_locations[0][2]: X_face_locations[0][3]
-#     #     # try:
-#     #     #     print("here")
-#     #     #     cv2.imshow("fdgd",frame[57:304,242:118])
-#     #     #     cv2.waitKey(1)
-#     #     # except:
-#     #     #     pass
-#     #     # If no faces are found in the image, return an empty result.
-#     #     if len(X_face_locations) == 0:
-#     #         return []
-#     #
-#     #     # Find encodings for faces in the test iamge
-#     #     faces_encodings = face_recognition.face_encodings(frame, known_face_locations=X_face_locations)
-#     #
-#     #     # Use the KNN model to find the best matches for the test face
-#     #     closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=1)
-#     #     are_matches = [closest_distances[0][i][0] <= distance_threshold for i in range(len(X_face_locations))]
-#     #     for i in range(len(X_face_locations)):
-#     #         print("closest_distances")
-#     #         print(closest_distances[0][i][0])
-#     #
-#     #     # Predict classes and remove classifications that aren't within the threshold
-#     #     return [(pred, loc) if rec else ("unknown", loc) for pred, loc, rec in
-#     #             zip(knn_clf.predict(faces_encodings), X_face_locations, are_matches)]
-#
-#     def get_frame(self):
-#         image = self.stream.read()
-#
-#         detector=cv2.CascadeClassifier('/home/ashish/Python_Machine_Learning_software/data/haarcascades_GPU/haarcascade_frontalface_default.xml')
-#         face=detector.detectMultiScale(image,1.1,7)
-#         [cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2) for (x,y,h,w) in face]
-#         ret, jpeg = cv2.imencode('.jpg', image)
-#         data = []
-#         data.append(jpeg.tobytes())
-#         return data
-
 import cv2
 import pickle
 from imutils.video import WebcamVideoStream
@@ -61,7 +6,6 @@ import numpy as np
 import glob
 import datetime as dt
 from goto import with_goto
-import time
 
 MIN_MATCH = 20
 showText = ''
@@ -199,14 +143,8 @@ def load_images(temp_kp, temp_desc,img):
         temp_kp.append(t_temp_kp)
         temp_desc.append(t_temp_desc)
 
-#Inicializa el detector, matcher y los arrays de features y set de imágenes
-detector, matcher = init_feature()
-temp_kp = []
-temp_desc = []
-img = []
 data_bill = []
-
-
+#Transfiere toda la info de las imágenes a un set de datos
 def load_data_set():
             data_bill_500_1=[img[16],temp_kp[16], temp_desc[16], '500', sound500]
             data_bill.append(data_bill_500_1)
@@ -249,14 +187,17 @@ def load_data_set():
             data_bill_500_4=[img[19],temp_kp[19], temp_desc[19], '500', sound500]
             data_bill.append(data_bill_500_4)
 
-            
+#Inicializa el detector, matcher y los arrays de features y set de imágenes
+detector, matcher = init_feature()
+temp_kp = []
+temp_desc = []
+img = []
+
 #Cargar imágenes y crear set de datos
 load_images(temp_kp, temp_desc,img)
 load_data_set()
 
 class VideoCamera(object):
-    
-
     def __init__(self):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
@@ -267,9 +208,7 @@ class VideoCamera(object):
 
     def __del__(self):
         self.stream.stop()
-
    
-    @with_goto
     def get_frame(self):
         found = False
         searchIndex = 1
@@ -282,8 +221,9 @@ class VideoCamera(object):
         img2 = preprocess(img2)
 
         
-        while(True):
+        data = []
 
+        while(True):
             #comienza la comparación para detectar el billete
             for bill in data_bill:
                   
@@ -297,10 +237,7 @@ class VideoCamera(object):
                 found, cont = match_draw(img1, img2, found, cont, showText,sound)
 
                 if found:
-                   break
-                
-            ret, jpeg = cv2.imencode('.jpg', img2)
-            data = []
-            data.append(jpeg.tobytes())
-            return data
+                    ret, jpeg = cv2.imencode('.jpg', img2)
+                    data.append(jpeg.tobytes())
+                    return data
                     
