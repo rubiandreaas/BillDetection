@@ -60,7 +60,7 @@ import pygame
 import numpy as np
 import glob
 import datetime as dt
-from goto import with_goto
+
 MIN_MATCH = 20
 showText = ''
 
