@@ -162,7 +162,7 @@ def load_data_set():
             data_bill.append(data_bill_100_2)
             data_bill_200_2=[img[9],temp_kp[9], temp_desc[9], '200', sound200]
             data_bill.append(data_bill_200_2)
-            data_bill_20_2=[img[13],temp_kp[13], temp_desc[14], '20', sound20]
+            data_bill_20_2=[img[13],temp_kp[13], temp_desc[13], '20', sound20]
             data_bill.append(data_bill_20_2)
             data_bill_500_2=[img[17],temp_kp[17], temp_desc[17], '500', sound500]
             data_bill.append(data_bill_500_2)
@@ -178,7 +178,7 @@ def load_data_set():
             data_bill.append(data_bill_500_3)
             data_bill_50_4=[img[27],temp_kp[27], temp_desc[27], '50', sound50]
             data_bill.append(data_bill_50_4)
-            data_bill_100_4=[img[3],temp_kp[0], temp_desc[0],'100', sound100]
+            data_bill_100_4=[img[3],temp_kp[3], temp_desc[3],'100', sound100]
             data_bill.append(data_bill_100_4)
             data_bill_200_4=[img[11],temp_kp[11], temp_desc[11], '200', sound200]
             data_bill.append(data_bill_200_4)
