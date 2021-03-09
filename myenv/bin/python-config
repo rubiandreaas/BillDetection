@@ -1,4 +1,4 @@
-#!/home/rubiandrea/Documentos/udemy/flask/welcome/FaceRecognitionFlask-master/myenv/bin/python
+#!/home/rubiandrea/Documentos/udemy/flask/welcome/BillDetectionMaster/myenv/bin/python
 
 import sys
 import getopt
