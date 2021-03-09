@@ -10,17 +10,17 @@ import datetime as dt
 MIN_MATCH = 20
 showText = ''
 
-pygame.mixer.init()
+#pygame.mixer.init()
 
-pygame.mixer.set_num_channels(8)
+#pygame.mixer.set_num_channels(8)
 
-player = pygame.mixer.Channel(2)
+#player = pygame.mixer.Channel(2)
 
-sound20 = pygame.mixer.Sound('sound/20.ogg')
-sound50 = pygame.mixer.Sound('sound/50.ogg')
-sound100 = pygame.mixer.Sound('sound/100.ogg')
-sound200 = pygame.mixer.Sound('sound/200.ogg')
-sound500 = pygame.mixer.Sound('sound/500.ogg')
+#sound20 = pygame.mixer.Sound('sound/20.ogg')
+#sound50 = pygame.mixer.Sound('sound/50.ogg')
+#sound100 = pygame.mixer.Sound('sound/100.ogg')
+#sound200 = pygame.mixer.Sound('sound/200.ogg')
+#sound500 = pygame.mixer.Sound('sound/500.ogg')
 
 def preprocess (frame):
     frame = cv2.bilateralFilter(frame, 6, 60, 60)
@@ -96,8 +96,8 @@ def match_draw(img1,img2,found,cont,showText,sound):
             cv2.putText(img2, showText, (20, 300), font, 10, (0, 255, 255), 10, cv2.LINE_4)
 
             #reproduce el sonido del billete encontrado si no hay otro sonido en cola de reproducción
-            if pygame.mixer.get_busy() == False:
-                play_sound(sound)
+            #if pygame.mixer.get_busy() == False:
+            #    play_sound(sound)
     else:
         found = False
         cont = 0
