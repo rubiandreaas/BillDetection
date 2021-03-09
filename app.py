@@ -6,7 +6,7 @@ import base64
 import cv2
 
 
-application = app =Flask(__name__)
+app =Flask(__name__)
 output=[]#("message stark","hi")]
 @app.route('/')
 def index():
