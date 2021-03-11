@@ -5,7 +5,7 @@ from imutils.video import WebcamVideoStream
 import numpy as np
 import glob
 import datetime as dt
-from goto import with_goto
+
 
 MIN_MATCH = 20
 showText = ''
@@ -217,7 +217,6 @@ class VideoCamera(object):
         self.stream.stop()
 
    
-    @with_goto
     def get_frame(self,cont,found,sound):
         
         img2 = self.stream.read()
