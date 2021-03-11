@@ -209,18 +209,19 @@ class VideoCamera(object):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
         # instead.
-
-        self.stream = WebcamVideoStream(src=0).start()
-        
-
+        self.video = cv2.VideoCapture(0)
+        # If you decide to use video.mp4, you must have this file in the folder
+        # as the main.py.
+        # self.video = cv2.VideoCapture('video.mp4')
+    
     def __del__(self):
-        self.stream.stop()
+        self.video.release()
 
    
     def get_frame(self,cont,found,sound):
         
-        img2 = self.stream.read()
-        img2 = preprocess(img2)
+        success, image = self.video.read()
+        img2 = preprocess(image)
 
         data = []
 
@@ -239,5 +240,5 @@ class VideoCamera(object):
 
             if found:
                 ret, jpeg = cv2.imencode('.jpg', img2)
-                data.append(jpeg.tobytes())
-                return data
+                return jpeg.tobytes()
+                
