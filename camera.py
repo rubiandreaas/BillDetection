@@ -1,7 +1,7 @@
 import cv2
 import pickle
 from imutils.video import WebcamVideoStream
-import pygame
+#import pygame
 import numpy as np
 import glob
 import datetime as dt
