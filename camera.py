@@ -1,31 +1,26 @@
 import cv2
 import pickle
 from imutils.video import WebcamVideoStream
-#import pygame
+import pygame
 import numpy as np
 import glob
 import datetime as dt
-
+from goto import with_goto
 
 MIN_MATCH = 20
 showText = ''
 
-#pygame.mixer.init()
+pygame.mixer.init()
 
-#pygame.mixer.set_num_channels(8)
+pygame.mixer.set_num_channels(8)
 
-#player = pygame.mixer.Channel(2)
+player = pygame.mixer.Channel(2)
 
-#sound20 = pygame.mixer.Sound('sound/20.ogg')
-#sound50 = pygame.mixer.Sound('sound/50.ogg')
-#sound100 = pygame.mixer.Sound('sound/100.ogg')
-#sound200 = pygame.mixer.Sound('sound/200.ogg')
-#sound500 = pygame.mixer.Sound('sound/500.ogg')
-sound20 = ('sound/20.ogg')
-sound50 = ('sound/50.ogg')
-sound100 = ('sound/100.ogg')
-sound200 = ('sound/200.ogg')
-sound500 = ('sound/500.ogg')
+sound20 = pygame.mixer.Sound('sound/20.ogg')
+sound50 = pygame.mixer.Sound('sound/50.ogg')
+sound100 = pygame.mixer.Sound('sound/100.ogg')
+sound200 = pygame.mixer.Sound('sound/200.ogg')
+sound500 = pygame.mixer.Sound('sound/500.ogg')
 
 def preprocess (frame):
     frame = cv2.bilateralFilter(frame, 6, 60, 60)
@@ -46,8 +41,8 @@ def init_feature():
 
 #Función que reproduce el sonido que recibe como argumento
 def play_sound(sound):
-    #pygame.init()
-    s#ound.play()
+    pygame.init()
+    sound.play()
     #pygame.time.wait(1000)
     #pygame.mixer.stop()
 
@@ -101,8 +96,8 @@ def match_draw(img1,img2,found,cont,showText,sound):
             cv2.putText(img2, showText, (20, 300), font, 10, (0, 255, 255), 10, cv2.LINE_4)
 
             #reproduce el sonido del billete encontrado si no hay otro sonido en cola de reproducción
-            #if pygame.mixer.get_busy() == False:
-            #    play_sound(sound)
+            if pygame.mixer.get_busy() == False:
+                play_sound(sound)
     else:
         found = False
         cont = 0
@@ -130,7 +125,7 @@ def match_draw(img1,img2,found,cont,showText,sound):
 
 #cargar imágenes y llenar arrays con feautures como referencias para la comparación de imágenes
 #recibe los array de imagenes y features globales
-def load_images(temp_kp, temp_desc,img):
+def load(temp_kp, temp_desc,img):
 
     # cargar la ruta de las imágenes
     filesname = [img for img in glob.glob("bills/*")]
@@ -141,7 +136,6 @@ def load_images(temp_kp, temp_desc,img):
 
     # recorrer todas las imágenes, calcular y guardar sus features en array
     for i in filesname:
-        print(i)
         image = cv2.imread(i)
         img.append(image)
         t_temp_kp, t_temp_desc = detector.detectAndCompute(image, None)
@@ -198,11 +192,14 @@ temp_kp = []
 temp_desc = []
 img = []
 
-#Cargar imágenes y crear set de datos
-load_images(temp_kp, temp_desc,img)
+
+load(temp_kp, temp_desc,img)
 load_data_set()
+img1 = img[0]
 
 class VideoCamera(object):
+    
+
     def __init__(self):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
@@ -213,19 +210,14 @@ class VideoCamera(object):
 
     def __del__(self):
         self.stream.stop()
-   
-    def get_frame(self):
-        found = False
-        searchIndex = 1
-        cont = 0
-        sound = ''
-        showText = ''
-        img1 = img[0]
 
+   
+    @with_goto
+    def get_frame(self,cont,found,sound):
+        
         img2 = self.stream.read()
         img2 = preprocess(img2)
 
-        
         data = []
 
         while(True):
@@ -239,10 +231,9 @@ class VideoCamera(object):
                 sound = bill[4]
                 print(showText)
                          
-                found, cont = match_draw(img1, img2, found, cont, showText,sound)
+                found= match_draw(img1, img2, found, cont,showText,sound)
 
-                if found:
-                    ret, jpeg = cv2.imencode('.jpg', img2)
-                    data.append(jpeg.tobytes())
-                    return data
-                    
+            if found:
+                ret, jpeg = cv2.imencode('.jpg', img2)
+                data.append(jpeg.tobytes())
+                return data

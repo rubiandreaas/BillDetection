@@ -16,9 +16,12 @@ def index():
 
 
 def gen(camera):
-    
+    found = False
+    sound = ''
+    showText = ''
+    cont = 0
     while True:
-        data= camera.get_frame()
+        data= camera.get_frame(cont,found,sound)
 
         frame=data[0]
         yield (b'--frame\r\n'
