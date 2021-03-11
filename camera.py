@@ -1,10 +1,11 @@
 import cv2
 import pickle
 from imutils.video import WebcamVideoStream
-import pygame
+#import pygame
 import numpy as np
 import glob
 import datetime as dt
+#from playsound import playsound
 
 
 MIN_MATCH = 20
@@ -21,6 +22,12 @@ showText = ''
 #sound100 = pygame.mixer.Sound('sound/100.ogg')
 #sound200 = pygame.mixer.Sound('sound/200.ogg')
 #sound500 = pygame.mixer.Sound('sound/500.ogg')
+
+sound20 = ('sound/20.ogg')
+sound50 = ('sound/50.ogg')
+sound100 = ('sound/100.ogg')
+sound200 = ('sound/200.ogg')
+sound500 = ('sound/500.ogg')
 
 def preprocess (frame):
     frame = cv2.bilateralFilter(frame, 6, 60, 60)
@@ -40,9 +47,9 @@ def init_feature():
     return detector, matcher
 
 #Función que reproduce el sonido que recibe como argumento
-def play_sound(sound):
-    pygame.init()
-    sound.play()
+#def play_sound(sound):
+#    pygame.init()
+#    sound.play()
     #pygame.time.wait(1000)
     #pygame.mixer.stop()
 
@@ -98,6 +105,7 @@ def match_draw(img1,img2,found,cont,showText,sound):
             #reproduce el sonido del billete encontrado si no hay otro sonido en cola de reproducción
             #if pygame.mixer.get_busy() == False:
             #    play_sound(sound)
+            #playsound(sound)
     else:
         found = False
         cont = 0
