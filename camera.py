@@ -218,7 +218,7 @@ class VideoCamera(object):
 
    
     def get_frame(self,cont,found,sound):
-        
+    
         img2 = self.stream.read()
         img2 = preprocess(img2)
 

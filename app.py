@@ -2,18 +2,14 @@ import json,time
 from camera import VideoCamera
 from flask import Flask, render_template, request, jsonify, Response
 import requests
-import base64
-import cv2
+import base64,cv2
 
 
-app =Flask(__name__)
-output=[]#("message stark","hi")]
+app=Flask(__name__)
+output=[]
 @app.route('/')
-def index():
-    """Video streaming home page."""
-    return render_template('index.html')
-
-
+def home_page():
+    return render_template("index.html",result=output)
 
 def gen(camera):
     found = False
@@ -32,8 +28,9 @@ def video_feed():
     return Response(gen(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(debug=True)#,host="192.168.43.161")
 
 
 
