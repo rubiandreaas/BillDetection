@@ -12,14 +12,13 @@ def home_page():
     return render_template("index.html",result=output)
 
 
-
 def gen(camera):
     found = False
     sound = ''
     showText = ''
-    cont = 0
+    cont=0
     while True:
-        data= camera.get_frame(cont,found,sound)
+        data= camera.get_frame(found,sound)
 
         frame=data[0]
         yield (b'--frame\r\n'
@@ -32,7 +31,6 @@ def video_feed():
 
 
 if __name__=="__main__":
-    app.run(debug=True)#,host="192.168.43.161")
+    app.run(debug=True)
 
     
-

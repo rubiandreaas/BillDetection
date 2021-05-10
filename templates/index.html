@@ -5,14 +5,22 @@
 
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
-    <title>OpeCv Heroku Deploy</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Billetes visión artificial</title>
 
 </head>
 
 <body>
     <div id="container">
-        <h3>Billetes Mexicanos</h3>
-        <img id="imageElement" src="{{ url_for('video_feed') }}">
+        <div row align-items-center>
+            <h3>Billetes Mexicanos</h3>
+            <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Responsive image">
+        </div>
+
+
+
+
     </div>
 
 
